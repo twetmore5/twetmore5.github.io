@@ -17,6 +17,7 @@
             color: white;
             font-family: 'Helvetica', sans-serif;
             text-align: center;
+            overflow: hidden;
         }
 
         #title {
@@ -45,22 +46,22 @@
             background-color: #555;
         }
 
-        /* Hidden video to prevent sleep */
+        /* Full-screen transparent video to prevent sleep */
         video {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             visibility: hidden;
-            z-index: -1; /* Make sure the video is behind the content */
+            z-index: -1; /* Video behind all content */
         }
     </style>
 </head>
 <body>
 
-    <!-- Transparent video element to keep the iPad awake -->
-    <video autoplay loop muted>
+    <!-- Full-screen transparent video element to keep the iPad awake -->
+    <video autoplay loop muted playsinline>
         <source src="data:video/mp4;base64,AAAAHGZ0eXBtcDQyAAAAAG1wNDI1AAACbmlmZAAAgAAAAoAAAAIAAAAJgAAABpkaXRzAAAAR21pZjIAAAANbW92aW5oYXBzAAEAAwAAAA8F0pC1UNjJcmwubG5jb20Adm1kAAAAY3NhcHByZXNzAAAAIAAAAA9DaXqN2C3v8AAAA9Dbh/jng+YYTkATwHlO5Xw3rC7ZL0I4LwFMfwvBC5lR3mgMcflFgVmmCpseT5SYgPvqJdHc8wHGsb6ck8TkD/xg5B79w==" type="video/mp4">
     </video>
 
