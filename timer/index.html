@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+            font-family: 'Helvetica', sans-serif;
+            text-align: center;
+        }
+
+        #title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #timer {
+            font-size: 150px;
+            font-weight: bold;
+            letter-spacing: 5px;
+        }
+
+        #reset-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #reset-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="title">Remaining Time:</div>
+    <div id="timer">00:00:00</div>
+    <button id="reset-button" onclick="resetTimer()">Reset</button>
+
+    <script>
+        const targetDate = new Date("December 18, 2024 16:00:00 EST").getTime(); // Target time: December 18, 4 PM EST
+        let interval;
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const remainingTime = targetDate - now;
+
+            if (remainingTime <= 0) {
+                clearInterval(interval);
+                document.getElementById("timer").textContent = "00:00:00";
+                return;
+            }
+
+            const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+            const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+            document.getElementById("timer").textContent = `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`;
+            resizeTimerText();
+        }
+
+        function formatTime(time) {
+            return time < 10 ? `0${time}` : time;
+        }
+
+        function resizeTimerText() {
+            const timerElement = document.getElementById("timer");
+            const width = window.innerWidth;
+            const targetWidth = width * 0.75; // Timer should take 75% of the window's width
+            const avgCharWidth = 0.6; // Estimate for average character width in the timer text
+
+            const text = "00:00:00";
+            const numChars = text.length;
+            const totalTextWidth = numChars * avgCharWidth * 100; // Scale based on initial font size of 100
+
+            const fontSize = Math.max(80, Math.min((targetWidth / totalTextWidth) * 100, 400)); // Scale font size
+
+            timerElement.style.fontSize = `${fontSize}px`;
+        }
+
+        function resetTimer() {
+            window.location.reload(); // Reload the page to reset the timer
+        }
+
+        // Start the timer immediately
+        interval = setInterval(updateTimer, 1000);
+        resizeTimerText(); // Adjust font size on load
+
+        // Adjust font size when the window is resized
+        window.addEventListener("resize", resizeTimerText);
+
+    </script>
+
+</body>
+</html>
