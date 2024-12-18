@@ -44,9 +44,25 @@
         #reset-button:hover {
             background-color: #555;
         }
+
+        /* Hidden video to prevent sleep */
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            visibility: hidden;
+            z-index: -1; /* Make sure the video is behind the content */
+        }
     </style>
 </head>
 <body>
+
+    <!-- Transparent video element to keep the iPad awake -->
+    <video autoplay loop muted>
+        <source src="data:video/mp4;base64,AAAAHGZ0eXBtcDQyAAAAAG1wNDI1AAACbmlmZAAAgAAAAoAAAAIAAAAJgAAABpkaXRzAAAAR21pZjIAAAANbW92aW5oYXBzAAEAAwAAAA8F0pC1UNjJcmwubG5jb20Adm1kAAAAY3NhcHByZXNzAAAAIAAAAA9DaXqN2C3v8AAAA9Dbh/jng+YYTkATwHlO5Xw3rC7ZL0I4LwFMfwvBC5lR3mgMcflFgVmmCpseT5SYgPvqJdHc8wHGsb6ck8TkD/xg5B79w==" type="video/mp4">
+    </video>
 
     <div id="title">Remaining Time:</div>
     <div id="timer">00:00:00</div>
@@ -55,19 +71,6 @@
     <script>
         const targetDate = new Date("December 18, 2024 16:00:00 EST").getTime(); // Target time: December 18, 4 PM EST
         let interval;
-        let wakeLock = null;
-
-        // Check for Screen Wake Lock API support
-        async function requestWakeLock() {
-            try {
-                if ('wakeLock' in navigator) {
-                    wakeLock = await navigator.wakeLock.request('screen');
-                    console.log("Wake lock acquired!");
-                }
-            } catch (err) {
-                console.log("Wake lock not supported or error: ", err);
-            }
-        }
 
         function updateTimer() {
             const now = new Date().getTime();
@@ -116,11 +119,6 @@
 
         // Adjust font size when the window is resized
         window.addEventListener("resize", resizeTimerText);
-
-        // Request wake lock when the page loads
-        document.addEventListener("DOMContentLoaded", function() {
-            requestWakeLock();
-        });
     </script>
 
 </body>
