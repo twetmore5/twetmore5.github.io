@@ -36,10 +36,9 @@
 
     <div id="title">Countdown to Christmas Morning:</div>
     <div id="timer">00:00:00</div>
-    <audio id="alarm-sound" src="https://www.soundjay.com/button/sounds/beep-07.mp3"></audio>
 
     <script>
-        const targetDate = new Date("December 25, 2024 08:30:00").getTime();
+        const targetDate = new Date("December 25, 2024 07:00:00").getTime();
         let interval;
 
         function updateTimer() {
@@ -49,7 +48,6 @@
             if (remainingTime <= 0) {
                 clearInterval(interval);
                 document.getElementById("timer").textContent = "00:00:00";
-                playSound();
                 return;
             }
 
@@ -83,11 +81,6 @@
             const fontSize = Math.max(80, Math.min((targetWidth / totalTextWidth) * 100, 400));
 
             timerElement.style.fontSize = `${fontSize}px`;
-        }
-
-        function playSound() {
-            const sound = document.getElementById("alarm-sound");
-            sound.play();
         }
 
         // Start the timer
